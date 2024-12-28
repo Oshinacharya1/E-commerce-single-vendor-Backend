@@ -15,7 +15,7 @@ public class Product {
 
     private Long id;
     private String price;
-    //    private String image;
+    private String imageurl;
     private String status;
 
 }
