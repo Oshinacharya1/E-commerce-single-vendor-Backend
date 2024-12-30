@@ -24,12 +24,20 @@ public class UserApiController {
         return userImpl.viewAllUser();
     }
 
+    //Find user by username and password
+    @GetMapping("/findUser")
+    public ResponseEntity<User> findUser(@RequestParam String username, @RequestParam String password) {
+        System.out.println("Request received to find user by username and password");
+        User user = userImpl.findByUsernameAndPassword(username, password);
+        return user != null ? ResponseEntity.ok(user) : ResponseEntity.status(404).body(null);
+    }
+
 
     // Edit an existing user
     @PutMapping("/edit/{id}")
     public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User updatedUser) {
         System.out.println("Request received to edit a user details with ID: " + id);
-        User user = userImpl.editUser(id, updatedUser.getUsername(), updatedUser.getPassword(),updatedUser.getContact());
+        User user = userImpl.editUser(id, updatedUser.getFirstName(), updatedUser.getLastName(), updatedUser.getUsername(), updatedUser.getPassword(),updatedUser.getContact());
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 

@@ -23,10 +23,12 @@ public class UserImpl {
         return userRepository.findAll();
     }
 
-    public User editUser(Long id, String userName, String password, String contact) {
+    public User editUser(Long id, String firstName, String lastName, String userName, String password, String contact) {
         Optional<User> existingUser = userRepository.findById(id);
         if (existingUser.isPresent()) {
             User user = existingUser.get();
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
             user.setUsername(userName);
             user.setPassword(password);
             user.setContact(contact);
@@ -43,6 +45,9 @@ public class UserImpl {
             return true;
         }
         return false; // Return false if the user does not exist
+    }
+    public User findByUsernameAndPassword(String username, String password) {
+        return userRepository.findByUsernameAndPassword(username, password).orElse(null);
     }
 
 }
